@@ -35,7 +35,7 @@ pipeline {
         }
         stage('build docker image'){
             steps{
-              sh 'docker build -t petclinic:latest -t petclinic:${BUILD_NUMBER} .'
+              sh 'docker build -t nada410/petclinic:latest -t nada410/petclinic:${BUILD_NUMBER} .'
             }
         }
         stage('push docker image'){
@@ -49,7 +49,7 @@ pipeline {
         }
         stage('run container'){
             steps{
-              sh 'docker run -dp 9090:9090 petclinic:latest '
+              sh 'docker run -dp 9090:9090 nada410/petclinic:latest '
             }
         }
     }
