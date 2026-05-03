@@ -35,7 +35,7 @@ pipeline {
         }
         stage('build docker image'){
             steps{
-              sh 'docker build -t nada410/petclinic:latest -t nada410/petclinic:${BUILD_NUMBER} .'
+              sh "docker build -t nada410/petclinic:latest -t nada410/petclinic:${BUILD_NUMBER} ."
             }
         }
         stage('push docker image'){
@@ -44,7 +44,7 @@ pipeline {
                 sh "echo $PASS | docker login -u $USER --password-stdin"
                 }
                 sh 'docker push nada410/petclinic:latest'
-                sh 'docker push nada410/petclinic:${BUILD_NUMBER}'
+                sh "docker push nada410/petclinic:${BUILD_NUMBER}"
             }
         }
         stage('run container'){
