@@ -33,10 +33,23 @@ pipeline {
               sh 'mvn package'
             }
         }
-        stage('run .jar'){
+        stage('build docker image'){
             steps{
-              sh 'nohup java -jar target/*.jar >app.log 2>&1 &'
-              sh 'sleep 60'
+              sh 'docker build -t petclinic:latest -t petclinic:${BUILD_NUMBER} .'
+            }
+        }
+        stage('push docker image'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                sh "echo $PASS | docker login -u $USER --password-stdin"
+                }
+                sh 'docker push nada410/petclinic:latest'
+                sh 'docker push nada410/petclinic:${BUILD_NUMBER}'
+            }
+        }
+        stage('run container'){
+            steps{
+              sh 'docker run -dp 9090:9090 petclinic:latest '
             }
         }
     }
