@@ -10,7 +10,7 @@ pipeline {
     stages{
         stage('clone git repo'){
             steps{
-              git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
+              git branch: 'main', url: 'https://github.com/Nada-Abdelghany/spring-petclinic.git'
             }
         }
         stage('change exposed port'){
